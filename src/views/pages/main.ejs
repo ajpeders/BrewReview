@@ -1,0 +1,68 @@
+<%- include('../partials/header') %>
+<%- include('../partials/menu') %>
+
+
+    <div class="bg-dark navbar navbar-expand-lg">
+        <div class="col-12" style="margin: auto; margin-top: 1%; margin-bottom: 1%;">
+            <div class="form-group">
+                <label for="searchBar" class="row d-flex justify-content-around" style="color: white;">
+                    <h4>Brew Review</h4>
+                </label>
+                <div class="row" align:center>
+                    <div style="width: 50%; margin-left: auto;">
+                        <input type="text" class="form-control" id="searchBar" placeholder="Search for Brewery" style="margin-right: 1%;">
+                    </div>
+                    <div style="float: left; margin-left: 1%; margin-right: auto;">
+                        <button type="submit" id ="search_btn" class="bg-light btn">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>	
+
+<div class="container">
+    <div id="brew_hold" style="margin-top: 2%"></div>
+
+    <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reviewModalLabel">Add Review</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/reviews" method="post" id="revSubmit">
+                        <div class="form-group">
+                            <div class="row" style="margin-right: 2%;">
+                                <label class="col">
+                                    Brewery Name: 
+                                </label>
+                                <input type="text" class="col-md-8 ml-auto form-control" id="brew_name" name="brew_name" readonly="true">
+                            </div>
+
+                            </br>
+                            <div class="row" style="margin-right: 2%;">
+                                <label class="col-3">
+                                    Enter Review Here: 
+                                </label>
+                                <textarea class="col-md-8 ml-auto form-control" id="review_data" name="review_data" rows="4" placeholder="Review..."></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                    Close
+                                </button>
+                                <button type="submit" id="review_btn" form="revSubmit" style="color: white;" class="btn btn-secondary" disabled>
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,41 @@
+services:
+  heroku-cli:
+    build: ./heroku
+    env_file: ./heroku/.env
+
+  db:
+    build: ./db
+    env_file: .env
+    volumes:
+      - ./db/init_data:/docker-entrypoint-initdb.d
+      - brewReview-db:/var/lib/postgresql/data  
+
+  web:
+    build: 
+      context: ./
+      dockerfile: Dockerfile
+      target: devapp
+    depends_on:
+      - db                                      
+    env_file: .env
+    ports:
+        - "3000:3000" 
+    volumes:
+      - ./src:/app/src
+
+volumes:
+  brewReview-db: {}
+
+#Local Database Access:
+  #docker-compose exec db psql -U postgres
+
+#Heroku Database Access:
+  #docker-compose run heroku-cli
+  #heroku pg:psql -a [app_name] 
+
+#====For Heroku
+#
+#   docker buildx build --platform linux/amd64 -t web .
+#   docker tag web registry.heroku.com/brew-review-ap/web
+#   docker push registry.heroku.com/brew-review-ap/web
+#   heroku container:release web -a brew-review-ap

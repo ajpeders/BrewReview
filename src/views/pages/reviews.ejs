@@ -1,0 +1,59 @@
+<%- include('../partials/header') %>
+<%- include('../partials/menu') %>
+<style>
+    table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+    padding-top: 1%;
+    padding-left: 1%;
+}
+</style>
+
+<div class="container">
+    <form action="/reviews" method="get" id="filterForm">            
+        <div class="row form-group" style="margin-top: 2%;">
+            <input type="text" class="form-control col" name="filter" placeholder="Filter Breweries" style="margin-right: 1%;">
+            <button type="submit" id ="filter_btn" class="btn btn-secondary col-2">Filter</button>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-10 mr-auto">
+        
+        <% if(numFreviews){ 
+            var countStr = '<small style="float:left">' + numFreviews+' Results matching ('+filterStr+')'+'</small>';
+        }%><%-countStr%>
+
+        <%if(filterStr && !numFreviews){
+            var filStr = '<small style="float:left">No Results for '+filterStr+'</small>';
+        }%><%-filStr%>
+        </div>
+        <div class="col-2 ml-auto">
+            <%if(title){
+                var disTitle = '<small style="float:right">'+title+'</small>';
+            }%><%-disTitle%>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-around">
+        <table class="col-12 table table-bordered table-striped">
+        
+            <tr>
+                <th width ="35%">Brewery</th>
+                <th>Review</th>
+                <th width="15%">Review Date</th>
+            </tr>
+            <% if(disReviews){
+                var revs = '';
+                disReviews.forEach(item => {
+                    var months = ["Jan","Feb","Mar","April","May","June","July","Aug","Sept","Oct","Nov","Dec"];
+                    var temp_date = months[item.review_date.getMonth()];
+                    temp_date += " "+item.review_date.getDate();
+                    temp_date += ", "+item.review_date.getFullYear();
+                    revs += '<tr><td>'+item.brewery_name+'</td><td>'+item.review+'</td><td>'+temp_date+'</td></tr>';
+                });
+            }%><%-revs%>
+        </table>
+    </div>
+</div> 
+<%- include('../partials/footer') %>
